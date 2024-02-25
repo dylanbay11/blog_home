@@ -35,7 +35,7 @@ treemap(example, index = names(ex)[1:(ncol(ex)-1)], vSize = "x")
 One line graphing, nice! Note that the core documentation (located [here](https://cran.r-project.org/web/packages/treemap/treemap.pdf)) has the complicated looking selection above for the columns, and I've followed their lead, thought they don't mention why. This is just so that the auto-generation works no matter how many columns you create. However, you can always just manually specify them as well and they will evaluate in order (biggest to smallest level of category, in terms of nesting) if you pass them as a vector of strings. Here's the output of this classic "tester" treemap.
 
 <figure>
-	<img src="{{site.url}}/{{site.baseurl}}/assets/img/diskinventoryx.png" alt=""> 
+	<img src="{{site.url}}/{{site.baseurl}}/assets/img/rando_tree.png" alt=""> 
 	<figcaption>Make sure to hit the "Zoom" button if you're using RStudio to make sure you're seeing it all!</figcaption>
 </figure>
 
