@@ -20,7 +20,6 @@ Well, there's good news. In almost every scenario in which you'd want to make a 
 
 For our purposes, we'll be using the `treemap` package in R. We'll use some real data later, but a good way to start is the built in auto-generator of the right kind and format of data for our purposes. Note! You'll want your data set up where each column has the value of the level of "depth" that you want - if it's not set up that way, you might need to pivot wider or longer as the case may be.
 
-<!-- {%- highlight python -%} -->
 ```r
 # Let's install and load the package
 install.packages("treemap")
@@ -32,7 +31,6 @@ example <- random.hierarchical.data(30)
 # Index contains all category columns, vSize is the "actual data"
 treemap(example, index = names(ex)[1:(ncol(ex)-1)], vSize = "x")
 ```
-<!-- {%- endhighlight -%} -->
 
 One line graphing, nice! Note that the core documentation (located [here](https://cran.r-project.org/web/packages/treemap/treemap.pdf)) has the complicated looking selection above for the columns, and I've followed their lead, thought they don't mention why. This is just so that the auto-generation works no matter how many columns you create. However, you can always just manually specify them as well and they will evaluate in order (biggest to smallest level of category, in terms of nesting) if you pass them as a vector of strings. Here's the output of this classic "tester" treemap.
 
