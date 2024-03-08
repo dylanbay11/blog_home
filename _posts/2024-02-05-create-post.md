@@ -3,9 +3,10 @@ layout: post
 title:  "How to create a blog post"
 date: 2024-02-05
 description: A sample post with instructions and tips on how to create a new blog post.   
-image: "/assets/img/image5.jpg"
+image: "/assets/img/image5.jpg" # optional red panda
 display_image: false  # change this to true to display the image below the banner 
-hidden: true
+# hidden: true
+publish: false
 ---
 <p class="intro"><span class="dropcap">T</span>his post will describe how to create a blog post with the proper naming conventions, as well as tips for including images and links.  At the end there is a troubleshooting guide that can help with the most common problems .</p>
 
