@@ -3,7 +3,7 @@ layout: post
 title:  "Epic Games Free Games Data Collection"
 date: 2024-03-06
 description: A sample post with instructions and tips on how to create a new blog post.   
-image: "/assets/img/egs_present.jpeg" 
+image: "/assets/img/egs_dark.jpeg" 
 # image grabbed from https://store.epicgames.com/en-US/news/the-holiday-sale-returns-on-december-17-plus-15-free-games
 ---
 
