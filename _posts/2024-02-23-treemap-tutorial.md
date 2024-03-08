@@ -3,7 +3,7 @@ layout: post
 title:  "Thinking 'Inside the Box' with Treemaps"
 fontsize: 24
 description: Picky about pie charts? Bored of bar charts? Try a treemap!
-image: /assets/img/pretty-treemap.png
+image: "/assets/img/pretty-treemap.png"
 ---
 
 
