@@ -1,3 +1,3 @@
-## Another Stat386 Theme
+## Dylan's Data Science Blog repo
 
-This is another theme choice for your Stat 386 blog. 
+Blog format and theme supplied by Dr. Tass, modified from "Long Haul"
