@@ -4,6 +4,7 @@ title:  "Example Post Formatting"
 date:   2014-12-15
 description: This is a post was provided by the template to show how to format different parts of the blog post in markdown.
 # hidden: true
+# hide: true # untested
 publish: false
 ---
 
