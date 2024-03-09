@@ -8,6 +8,7 @@ display_image: false
 ---
 
 
+
 Everyone has seen a million bar charts, though they continue to be popular for a reason, and it's now popular wisdom that a pie chart should rarely be used simply because of, well, the stigma. Okay, that's unfair. The pie chart has some deeper problems. One of the fundamental issues has to do with how a pie chart uses its real estate. This isn't unique to pie charts, but space is limited for labels, and the whole center of the chart is essentially wasted space since the slivers are too hard to see (and no, a "donut chart" is not a real solution). Slice size is often unintuitive and hard to distinguish. For example, the following chart is very humorous and interesting, but as a chart itself, it's offensive to the eyes:
 
 <figure>
