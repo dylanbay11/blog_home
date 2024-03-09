@@ -4,7 +4,7 @@
 title: "Blogging a Data Science Class"
 description: "Following along with some stats along the way" 
 author: Dylan Bay
-author_description: "I'm a student at BYU in the Statistics department, graduating in April 2025" 
+author_description: "I'm a student at BYU in the Statistics department, with an emphasis in Data Science and graduating in April 2025. I love from hearing from people, so feel free to drop me an email!" 
 
 url: https://dylanbay11.github.io ## change this to https://yourusername.github.io
 baseurl: /blog_home ## change this to the name of your blog repository
@@ -15,7 +15,7 @@ social:
     github:  dylanbay11 ## required
     twitter: 
     facebook: 
-    email: 
+    email:  dylanbay11@gmail.com
     linkedin: 
     youtube: 
     tumblr: 

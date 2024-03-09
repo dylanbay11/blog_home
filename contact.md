@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Contact Long Haul
+title: Say hi to Dylan!
 ---
 
 <div id="contact">
