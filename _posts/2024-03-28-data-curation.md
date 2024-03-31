@@ -33,6 +33,111 @@ Examining *how* I collected this data, I hope, can be helpful to others in a sim
 
 I should state that there are about a half dozen lists floating around by various websites and users with about the same amount of data, probably in turn scraped from Epic's homepage or news sources. I chose this list in particular because it also offered links to each store page, which I felt could be very helpful. However, other than name and date, the list isn't very populated. My first step was to simply get this data myself, in a good format. Web scraping to the rescue!
 
+Load up some typical packages and grab the table:
+
+```python
+import pandas as pd             # data manipulation package
+import numpy as np              # common companion to pandas
+from bs4 import BeautifulSoup   # to make sense of scraped hmtl
+import requests                 # to obtain the data via scraping
+import re                       # to parse and manipulate text
+import time                     # to obey any rate limits
+
+gameurl = "https://www.steamgifts.com/discussion/S4e2c/free-epic-games-store-list-of-all-weekly-free-games-every-thursday-at-11-am-et"
+r = requests.get(gameurl)
+r.status_code  # 200 = good!
+
+gsoup = BeautifulSoup(r.text)
+gtable = gsoup.find("table")
+gdf = pd.read_html(str(gtable))[0]
+gdf.reset_index()
+gdf
+```
+
+This part worked great - until I realized it didn't have the links I really wanted. Rats.
+
+#### Common problem solving
+
+Yes, if you're a post-2022 programmer, you sometimes learn to lean on ChatGPT. You might know how to do something but it's often faster to modify something it gives you. And that's what I set out to do. I decided to just grab the links separately and then mash the dataframes together after. I got some code and tweaked it. This was the result:
+
+```python
+table_rows = gtable.find_all('tr')
+links = []
+for tr in table_rows:
+    td = tr.find_all('td')
+    for cell in td:
+        link = cell.find('a')
+        if link:
+            links.append(link['href'].strip())
+links_series = pd.Series(links1)
+
+gdf["Link"] = links_series
+print(gdf)
+```
+
+Moral of the story? If it's your own project, your time matters and getting a little help is fine. Perhaps it's a bit messier than it needs to be, but it works just fine and it's still readable. ChatGPT is a great choice of helper. I should also mention that in this case, it seems pretty straightforwardly ethical to grab this data. It's public, it's commonly available information, and I'm going to be crediting them in my similarly public code publishing at the end of the project. 
+
+#### Using an API to enrich the data
+
+At this point the original goal still stands: I want to add some color to the dataset, and enrich it to answer my original questions. The Epic Games Store itself is probably the best resource for this, as some of the games in the free giveaways are exclusive to Epic and thus can't be found elsewhere. Also, prices can vary from storefront to storefront.
+
+While I had first planned on using Selenium or a similar tool to scrape data from each webpage individually, I soon landed on a more efficient solution: Using an API. Sadly, though Epic offers **a lot** of API support, most of it is directed at game developers, not random people scraping store listings. Thus, their extensive documentation wasn't much help. A wrapper for the store API, however, was open source and available, `epicstore-api`, located on PyPI [here](https://pypi.org/project/epicstore-api/) with a sparse but useful [documentation](https://epicstore-api.readthedocs.io/en/latest/). 
+
+It took a little playing around, but I settled on a script that would grab a page's information and make sense of the right things in the JSON it returns:
+
+```python
+import epicstore_api
+from epicstore_api import EpicGamesStoreAPI, OfferData
+import json
+
+api = EpicGamesStoreAPI()
+def get_gamedata(gamename, tries = 10):
+    # takes a string gamename, searches for it, finds exact match
+    # returns dict with id, descr[iption], namespace, orig[inal]_price, fmt_orig_price (nicely formatted), and tags
+
+    dict = api.fetch_store_games(count = tries, keywords = gamename)
+    match = None
+    for element in dict["data"]["Catalog"]["searchStore"]["elements"]:
+        if element["title"] == gamename:
+            match = element
+            break
+    to_return = {
+    "id": match["id"],
+    "descr": match["description"],
+    "namespace": match["namespace"],
+    "orig_price": match["price"]["totalPrice"]["originalPrice"],
+    "fmt_orig_price": match["price"]["totalPrice"]["fmtPrice"]["originalPrice"],
+    "tags": match["tags"],
+    "seller": match["seller"]["name"]
+    }
+    return to_return
+
+# Create a quick function wrap that waits between each requests and backfills with blank data if failed
+def single_get(name):
+    time.sleep(.5)
+    try:    
+        done = get_gamedata(name)
+    except:
+        try:
+            done = get_gamedata(name, 100)
+        except:
+            done = None
+        done = None
+    return done
+
+# get everything (will take a while!!)
+data_return_df = [single_get(a_game) for a_game in gdf['Name']]
+```
+
+I want to quickly mention two things about this: One, starting with one game, and the basic info, was very helpful, and adding complexity later. There are still a few tweaks I want to make and more information to grab. Second, to use best practice and avoid errors and flooding the server, I implemented both a wait between each game (to grab at most 120 games per minute, probably less due to python processing time) and also only fell back on grabbing more search results in the initial matching process if necessary (most games had one match, but a few with generic titles needed more). 
+
+#### Future work
+
+So, now I have a nice list of game tags, which are the genres for each game, the pricing, the sellers, and other information to get further data if I so choose (like reviews or other information from the webpages) on top of the original information including the release dates. I posted only a few snippets of code from my larger script just to illustrate the general approach, but there was obviously some more things going on too, like better name matching and further information gathering.
+
+Stay tuned for an upcoming post in the next few weeks where I look at the data and find out patterns with repeats, explore what kinds of games are being given away, and answer the burning question: **Just how many dollars worth of games have been given away?** If there's another curiousity you have about these free games, please drop a comment or send me an email!
+
+
 <!-- If you're seeing this post, you're ahead of the curve! Stay tuned for the next update, on a project to collect data about Epic's five-year free game giveaway experiment of over 400 games via web scraping and APIs. -->
 
 <!-- Intro about Steam's dominance, a chart about that dominance
