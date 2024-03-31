@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Over 400 Free PC Games - Data Collection"
-date: 2024-03-28
+date: 2024-03-30
 fontsize: 24
 description: "Giving away a game a week for five years is a lot."
 image: "/assets/img/egs_dark.jpeg" 
