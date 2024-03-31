@@ -75,7 +75,7 @@ gdf["Link"] = links_series
 print(gdf)
 ```
 
-Moral of the story? If it's your own project, your time matters and getting a little help is fine. Perhaps it's a bit messier than it needs to be, but it works just fine and it's still readable. ChatGPT is a great choice of helper. I should also mention that in this case, it seems pretty straightforwardly ethical to grab this data. It's public, it's commonly available information, and I'm going to be crediting them in my similarly public code publishing at the end of the project. 
+Moral of the story? If it's your own project, your time matters and getting a little help is okay. Perhaps it's a bit messier than it needs to be, but it works just fine and it's still readable. ChatGPT is a great choice of helper I would encourage you to use if you briefly get hung up on one part, or just to save time. I should also mention that in this case, it seems pretty straightforwardly ethical to grab this data. It's public, it's commonly available information, and I'm going to be crediting them in my similarly public code publishing at the end of the project. 
 
 #### Using an API to enrich the data
 
@@ -129,7 +129,7 @@ def single_get(name):
 data_return_df = [single_get(a_game) for a_game in gdf['Name']]
 ```
 
-I want to quickly mention two things about this: One, starting with one game, and the basic info, was very helpful, and adding complexity later. There are still a few tweaks I want to make and more information to grab. Second, to use best practice and avoid errors and flooding the server, I implemented both a wait between each game (to grab at most 120 games per minute, probably less due to python processing time) and also only fell back on grabbing more search results in the initial matching process if necessary (most games had one match, but a few with generic titles needed more). 
+I want to quickly mention three things about this: One, looking for an API and a wrapper saved me a lot of time and let me get quick results. Second, starting with one game, and the basic info, was very helpful; waiting until later to add complexity let me be efficient. There are still a few tweaks I want to make and more information to grab, but having data ready to go is very encouraging. Finally, to use best practice and avoid errors from flooding the server, I implemented both a wait between each game (in my case, to grab at most 120 games per minute, probably less due to python processing time) and also only fell back on grabbing more search results in the initial matching process if necessary (most games had one match, but a few with generic titles needed more). This is just being a good "scraping citizen".
 
 #### Future work
 
